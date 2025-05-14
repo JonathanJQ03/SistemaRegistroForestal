@@ -8,4 +8,26 @@
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>
+            index.jsp
+        </welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>
+            TreeController
+        </servlet-name>
+        <servlet-class>
+            com.espe.sistemaregistroforestal.controller.TreeController
+        </servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>
+            TreeController
+        </servlet-name>
+        <url-pattern>
+            /Tree
+        </url-pattern>
+    </servlet-mapping>
 </web-app>
