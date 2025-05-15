@@ -2,13 +2,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<<<<<<< HEAD
+
   <meta charset="UTF-8" />
   <title>Sistema de Registro Forestal</title>
-
-  <link rel="stylesheet" href="CSS/Header_Footer_Style.css" />
-  <link rel="stylesheet" href="CSS/forestZone.css" />
-
   <style>
     :root {
       --verde: hsl(111, 52%, 30%);
@@ -17,15 +13,6 @@
       --verde-oscuro-tr-2: hsla(111, 53%, 20%, 0.75);
     }
     
-    header {
-    position: sticky;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    background-color: white;
-    color: var(--verde);
-    transition: 0.3s all ease-in-out;
-}
-
-
     body {
         background-image: url('Images/lakeBrackgroundFormTree.jpg');
         background-size: cover;  /* Asegura que la imagen cubra todo el body */
@@ -40,20 +27,21 @@
     }
     
     nav {
-                font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: rgba(59, 108, 53, 0.7);
+    font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
-    height: 85px;
+    height: 100px;
     width: 100%;
     display: flex;
     justify-content: space-around;
 }
 
     nav figure.logo {
-    margin-top: -10px;
+    margin-top: 18px;
     }
     
     nav .links {
-        display: flex;
+    display: flex;
     gap: 30px;
     justify-content: center;
     align-items: center;
@@ -66,7 +54,7 @@
 
     nav a {
         text-decoration: none;
-        color: var(--verde);
+        color: #f4e7d1;
         font-weight: bold;
         transition: 0.2s all ease-in-out;
     }
@@ -78,9 +66,29 @@
         color: wheat;
     }
     
-    
+    main section.hero {
+    height: calc(100vh - 85px);
+    background-image: url("../img/index_0.jpg");
+    background-size: 150%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    animation: hero-bg;
+    animation-duration: 5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hero-bg {
+    0% {
+        background-size: 100%;
+    }
+    100% {
+        background-size: 150%;
+    }
+}
+
     main section.hero .container {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,8 +111,7 @@ main section.hero .center {
 
 .container {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1300px;
 }
 
 .typewriter h1 {
@@ -114,7 +121,7 @@ main section.hero .center {
     margin: 0 auto; /* Gives that scrolling effect as the typing happens */
     letter-spacing: .15em; /* Adjust as needed */
     animation: 
-        typing 3.5s steps(40, end),
+        typing 3.5s steps(35, end),
         blink-caret .75s step-end infinite;
     }
 
@@ -167,6 +174,8 @@ main section.hero figure.logo {
       transform: translateY(-8px);
       box-shadow: 0 12px 30px var(--verde-oscuro-tr-2);
       background: var(--verde);
+      color: #f4e7d1;
+      text-decoration: none;
     }
 
     .card-custom i {
@@ -186,6 +195,13 @@ main section.hero figure.logo {
       font-size: 0.95rem;
       color: rgb(43, 85, 8);
     }
+    
+    .card-custom h3:hover {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #f4e7d1
+    }
+
     
     footer{
     padding: 40px 20px;
@@ -298,7 +314,7 @@ footer .icono:hover img {
             </figure>
             <div class="typewriter">
                 <h1>Sistema de Registro Forestal</h1>
-                <h2>Gestión completa de árboles, actividades y zonas forestales</h2>
+                <h2 style="text-align: center">Gestión completa de árboles, actividades y zonas forestales</h2>
             </div>
         </div>
     </div>

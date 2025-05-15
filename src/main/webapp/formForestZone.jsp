@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="CSS/forestZone.css">
         <link rel="stylesheet" href="Header_Footer_Style.css">
-<<<<<<< HEAD
+
   <%-- Título dinámico: "Editar Zona Forestal" o "Nueva Zona Forestal" --%>
     <title>
       <c:choose>
@@ -21,21 +21,19 @@
       </c:choose>
     </title>
     <style>
-        body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f7f8;
-  color: #333;
-  padding: 30px;
-}
 
-h2 {
+.titulo {
   text-align: center;
-  color: #2c3e50;
+  color: var(--verde);
   margin-bottom: 30px;
+    background-color: rgba(240, 233, 175, 0.8);
+      border-radius: 10px;
+
 }
 
 form {
-  background: #fff;
+    color: var(--verde);
+    background-color: rgba(240, 233, 175, 0.8);
   padding: 25px 40px;
   margin: 0 auto;
   width: 100%;
@@ -73,10 +71,11 @@ button {
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background-color: var(--verde-oscuro);
 }
 
 button:hover {
-  background-color: #27ae60;
+  background-color: var(--verde);
 }
 
 p {
@@ -93,24 +92,191 @@ a:hover {
   text-decoration: underline;
 }
 
+    :root {
+      --verde: hsl(111, 52%, 30%);
+      --verde-oscuro: hsl(111, 52%, 20%);
+      --verde-oscuro-tr: hsla(111, 53%, 20%, 0.534);
+      --verde-oscuro-tr-2: hsla(111, 53%, 20%, 0.75);
+    }
+    
+    body {
+        background-image: url('Images/formForestZone.jpg');
+        background-size: cover;  /* Asegura que la imagen cubra todo el body */
+        background-position: center; /* Centra la imagen */
+        background-attachment: fixed; /* Fija la imagen para que no se desplace al hacer scroll */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        height: 100vh;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: white;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    nav {
+    background-color: rgba(59, 108, 53, 0.7);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+    nav figure.logo {
+    margin-top: 18px;
+    }
+    
+    nav .links {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    }
+    
+    nav h1 {
+    font-size: 2.5rem;
+}
+
+    nav a {
+        text-decoration: none;
+        color: #f4e7d1;
+        font-weight: bold;
+        transition: 0.2s all ease-in-out;
+    }
+
+    nav a:hover {
+        scale: 1.05;
+        opacity: 0.7;
+        text-decoration: none;
+        color: wheat;
+    }
+    
+   footer{
+    padding: 40px 20px;
+    text-align: center;
+    background-color: rgba(45, 74, 34, 0.6);
+    color: #f4f4f4;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.infoFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logoFooter, .infoDerecha {
+    flex: 1;
+    margin: 20px;
+}
+
+.fotoFooter {
+    width: 150px;
+    margin-bottom: 20px;
+    background-color: #f4e7d1;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+footer p {
+    font-size: 14px;
+    margin: 10px;
+    color: #d1d1d1;
+}
+
+footer h2 {
+    font-size: 24px;
+    color: #f4e7d1;
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: #f4e7d1;
+    text-decoration: none;
+}
+
+footer .redesSociales {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+footer .icono {
+    margin: 0 10px;
+}
+
+footer .icono img {
+    width: 25px;
+    height: 25px;
+    border-radius: 10px;
+
+}
+
+footer .icono:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+    @media (max-width: 600px) {
+      .cards-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card-custom {
+        width: 90%;
+      }
+    }
+    
+    .boton-volver {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #68975a;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.boton-volver:hover {
+  background-color: #2980b9;
+  text-decoration: none;
+}
+
+
     </style>
+    
+      <!-- FontAwesome for icons -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
 
     </head>
     <body>
-        <nav>
-            <figure class="logo">
-                <img src="Images/logo.png" alt="Logo">
-            </figure>
+                <!-- HEADER -->
+  <nav>
+        <a href="index.jsp">
+           <figure class="logo">
+              <img src="Images/logo.png" alt="Logo" height="60">
+            </figure> 
+        </a>
 
-            <div class="links">
-                <a href="formForestZone.jsp">Zona Forestal</a>
-                <a href="formTree.jsp">Árbol</a>
-                <a href="formConservationActivity.jsp">Actividad de Conservación</a>
-            </div>
-        </nav>
+      <div class="links">
+        <a href="ForestZone">Zonas Forestales</a>
+        <a href="Tree">Lista de Árboles</a>
+        <a href="ConservationActivity">Actividades</a>
+      </div>
+    </nav>
 
         <%-- Encabezado dinámico --%>
-        <h2>
+       
+        <h2 class="titulo">
             <c:choose>
                 <c:when test="${not empty forestZone.id}">Editar zona Forestal</c:when>
                 <c:otherwise>Nueva zona Forestal</c:otherwise>
@@ -135,7 +301,7 @@ a:hover {
                    value="${forestZone.zoneName}" required /><br/><br/>
 
             <label>Ubicación</label><br/>
-            <input type="number" step="0.01" name="location"
+            <input type="text" step="0.01" name="location"
                    value="${forestZone.location}" required /><br/><br/>
 
             <label>Superficie:</label><br/>
@@ -159,34 +325,28 @@ a:hover {
             </button>
         </form>
 
-        <p><a href="ForestZone">Volver al listado de Zonas Forestales</a></p>
+        <p><a href="ForestZone" class="boton-volver">Volver al listado de Zonas Forestales</a></p>
     </body>
-    <footer>
-        <div class="infoFooter">
-            <div class="logoFooter">
-                <img src="Images/logo.png" alt="Logo" class="fotoFooter" />
-                <p>&copy; 2025 Sistema de Registro Forestal</p>
-            </div>
-            <div class="infoDerecha">
-                <h2>Contáctanos</h2>
-                <p>Email: info@registroforestal.ec</p>
-                <p>Teléfono: +593 2 345 6789</p>
-
-                <div class="redesSociales d-flex gap-3">
-                    <a href="#" class="text-decoration-none text-white fs-4" aria-label="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none text-white fs-4" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="text-decoration-none text-white fs-4" aria-label="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </footer>
+      <footer>
+    <section class="infoFooter">
+        <section class="logoFooter">
+            <img src="Images/logo.png" alt="logo" class="fotoFooter">
+            <h2>Sistema de Registro Forestal</h2>
+            <p> <i class="fa-solid fa-map-pin"></i> Quito - Ecuador </p>
+            <p> <i class="fa-solid fa-phone"></i> +593 998765412</p>
+            <p><i class="fa-solid fa-envelope"></i><a href="mailto:forestzone@system.com">forestzone@system.com</a></p>
+        </section>
+        <section class="infoDerecha">
+            <section class="redesSociales">
+                <a href="https://www.facebook.com/?locale=es_LA" class="icono"><img src="Images/facebook.png" alt="Facebook" ></a>
+                <a href="https://www.instagram.com/" class="icono"><img src="Images/Instagram.webp" alt="Ig" ></a>
+                <a href="https://twitter.com/?lang=es" class="icono"><img src="Images/x.jpg" alt="X" ></a>
+            </section>  
+            &copy; Forest Zone
+            <p><i class="fa-solid fa-people-group"></i>Hecho por el Grupo 3</p>              
+        </section>
+    </section>
+</footer>
 
 </html>
 
