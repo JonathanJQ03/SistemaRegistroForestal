@@ -95,7 +95,7 @@ public class ConservationActivityDAO {
         return false; // O lanzar excepción según el caso
     }
 
-    String sql = "UPDATE conservationactivity SET descripcion = ?, activityType = ?, date = ?, responsible = ?, idZone = ? WHERE id = ?";
+    String sql = "UPDATE conservationactivity SET description = ?, activityType = ?, date = ?, responsible = ?, idZone = ? WHERE id = ?";
     try (Connection conn = ConnectionBD.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -126,4 +126,22 @@ public class ConservationActivityDAO {
             return false;
         }
     }
+    
+    public boolean existsZone(int idZone) {
+    boolean exists = false;
+    String sql = "SELECT COUNT(*) FROM forestzone WHERE id = ?";
+    try (Connection con = ConnectionBD.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idZone);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            exists = rs.getInt(1) > 0;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return exists;
+    }
+
+
 }

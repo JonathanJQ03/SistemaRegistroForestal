@@ -68,8 +68,27 @@ public class ConservationActivityController extends HttpServlet {
         int idZone = Integer.parseInt(request.getParameter("idZone"));
 
         try {
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-            ConservationActivity activity = new ConservationActivity(description, activityType, date, responsible, idZone);
+            // Crear objeto para reutilizar en ambos caminos
+            ConservationActivity activity = new ConservationActivity();
+            activity.setDescription(description);
+            activity.setActivityType(activityType);
+            activity.setResponsible(responsible);
+            activity.setIdZone(idZone);
+
+            try {
+                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+                activity.setDate(date);
+            } catch (Exception ex) {
+                activity.setDate(null); // Opcional: manejar si hay un error de formato
+            }
+
+            // Validar si el idZone existe
+            if (!activityDao.existsZone(idZone)) {
+                request.setAttribute("Error", "La zona forestal con ID " + idZone + " no existe en el sistema.");
+                request.setAttribute("activity", activity);
+                request.getRequestDispatcher("/formActivity.jsp").forward(request, response);
+                return;
+            }
 
             if (id == null) {
                 activityDao.save(activity);
