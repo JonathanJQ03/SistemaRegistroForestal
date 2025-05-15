@@ -99,11 +99,11 @@
       <div class="form-floating mb-3">
         <input type="number" step="0.01" class="form-control" id="height" name="height" 
                value="${tree.height}" 
-               min="0.1" max="150" 
+               min="0.1" max="115" 
                required />
         <label for="height">Altura (m)*</label>
         <div class="invalid-feedback">
-          Ingresa una altura válida (entre 0.1 y 150 metros).
+          Ingresa una altura válida (entre 0.1 y 115.72 metros).
         </div>
         <div id="heightError" class="error-message"></div>
       </div>
@@ -111,11 +111,11 @@
       <div class="form-floating mb-3">
         <input type="number" class="form-control" id="age" name="age" 
                value="${tree.age}" 
-               min="1" max="5000" 
+               min="1" max="4850" 
                required />
         <label for="age">Edad (años)*</label>
         <div class="invalid-feedback">
-          Ingresa una edad válida (entre 1 y 5000 años).
+          Ingresa una edad válida (entre 1 y  4,850 años años).
         </div>
         <div id="ageError" class="error-message"></div>
       </div>
