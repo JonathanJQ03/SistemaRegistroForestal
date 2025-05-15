@@ -12,7 +12,7 @@ public class ConnectionBD {
     //Realizar un try catch para manejar errores en caso de no poder conectarnos
     private static final String URL = "jdbc:mysql://localhost:3306/db_forest?useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USER = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "2003";
     //static define metodos o variables "globales" donde solo pueden existir unicamente un solo valor 
     //En caso de tener crear la misma variable se generara un error y tener cuidado pq podemos sobreescribirla para todos
      static {
