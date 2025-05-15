@@ -84,7 +84,7 @@ public class ConservationActivityController extends HttpServlet {
 
             // Validar si el idZone existe
             if (!activityDao.existsZone(idZone)) {
-                request.setAttribute("Error", "La zona forestal con ID " + idZone + " no existe en el sistema.");
+                request.setAttribute("modalError", "La zona ID  " + idZone + " no existe en el sistema.");
                 request.setAttribute("activity", activity);
                 request.getRequestDispatcher("/formActivity.jsp").forward(request, response);
                 return;
@@ -101,8 +101,10 @@ public class ConservationActivityController extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "Error saving activity");
+            request.setAttribute("error", "Error para guardar la actividad.");
             request.getRequestDispatcher("/formActivity.jsp").forward(request, response);
         }
     }
+
+
 }
