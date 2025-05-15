@@ -58,7 +58,7 @@ public class ForestZoneController extends HttpServlet {
                 List<ForestZone> forestZoneBD = forestZone.findAll();
                 //indico que envio a mi respuesta la lista que recibi del dao llamado como lista arboles 
                 request.setAttribute("listForestZone", forestZoneBD);
-                request.getRequestDispatcher("/list.jsp").forward(request, response);
+                request.getRequestDispatcher("/listForestZone.jsp").forward(request, response);
 
         }
     }
