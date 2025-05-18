@@ -15,7 +15,6 @@ import java.sql.Date;
  */
 
 @Entity
-@Table(name = "trees")
 
 public class ForestZone {
     @Id

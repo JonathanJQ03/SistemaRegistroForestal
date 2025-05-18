@@ -1,6 +1,8 @@
 package com.espe.sistemaregistroforestal.controller;
 
 import com.espe.sistemaregistroforestal.dao.TreeDAO;
+import com.espe.sistemaregistroforestal.dao.ZoneDAO;
+import com.espe.sistemaregistroforestal.model.ForestZone;
 import com.espe.sistemaregistroforestal.model.Tree;
 import java.io.IOException;
 import jakarta.servlet.*;
@@ -30,9 +32,13 @@ public class TreeController extends HttpServlet {
             //No le damos un valor para que no entre en ninguna condicion dentro del swich
             option = "none";
         }
+        ZoneDAO zoneDAO = new ZoneDAO();
+        List<ForestZone> listZones = zoneDAO.findAll();
+        request.setAttribute("listZones", listZones);
         switch (option) {
             case "new":
                 request.getRequestDispatcher("/formTree.jsp").forward(request, response);
+                break;
             case "delete":
                 Long idDelete = Long.valueOf(request.getParameter("id"));
                 boolean suceso = tree.delete(idDelete);
@@ -61,47 +67,82 @@ public class TreeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            // 1) Leer el parámetro 'id' (si viene vacío, es inserción; si no, es edición)
+            String idParam = request.getParameter("id");
+            Long id = (idParam == null || idParam.trim().isEmpty()) ? null : Long.valueOf(idParam);
 
-        // 1) Leer el parámetro 'id' (si viene vacío, es inserción; si no, es edición)
-        String idParam = request.getParameter("id");
-        Long id = (idParam == null || idParam.isEmpty())
-                ? null
-                : Long.valueOf(idParam);
+            // 2) Leer y validar todos los parámetros del formulario
+            String species = request.getParameter("species");
+            if (species == null || species.trim().isEmpty()) {
+                throw new ServletException("La especie es requerida");
+            }
 
-        // 2) Leer todos los parámetros del formulario
-        String species = request.getParameter("species");
-        double height = Double.parseDouble(request.getParameter("height"));
-        int age = Integer.parseInt(request.getParameter("age"));
-        String location = request.getParameter("location");
-        String description = request.getParameter("description");
-        String scientificName = request.getParameter("scientificName");
-        String origin = request.getParameter("origin");
-        // parseamos la fecha en formato ISO (yyyy-MM-dd)
-        java.sql.Date plantedDate = java.sql.Date.valueOf(request.getParameter("plantedDate"));
+            // Validación para height
+            String heightParam = request.getParameter("height");
+            if (heightParam == null || heightParam.trim().isEmpty()) {
+                throw new ServletException("La altura es requerida");
+            }
+            double height = Double.parseDouble(heightParam);
 
-        // 3) Crear y poblar el objeto Tree
-        Tree treeObj = new Tree();
-        treeObj.setSpecies(species);
-        treeObj.setHeight(height);
-        treeObj.setAge(age);
-        treeObj.setLocation(location);
-        treeObj.setDescription(description);
-        treeObj.setScientificName(scientificName);
-        treeObj.setOrigin(origin);
-        treeObj.setPlantedDate(plantedDate);
+            // Validación para age
+            String ageParam = request.getParameter("age");
+            if (ageParam == null || ageParam.trim().isEmpty()) {
+                throw new ServletException("La edad es requerida");
+            }
+            int age = Integer.parseInt(ageParam);
 
-        // 4) Insertar o actualizar según 'id'
-        if (id == null) {
-            // Nuevo registro
-            tree.save(treeObj);
-        } else {
-            // Edición de un registro existente
-            treeObj.setId(id);
-            tree.update(treeObj);
+            String location = request.getParameter("location");
+            String description = request.getParameter("description");
+            String scientificName = request.getParameter("scientificName");
+            String origin = request.getParameter("origin");
+            String idZoneParam = request.getParameter("idZone");
+            if (idZoneParam == null || idZoneParam.isEmpty()) {
+                throw new ServletException("La zona es requerida");
+            }
+            Long idZone = Long.valueOf(idZoneParam);
+
+            // Validación para plantedDate
+            String plantedDateParam = request.getParameter("plantedDate");
+            if (plantedDateParam == null || plantedDateParam.trim().isEmpty()) {
+                throw new ServletException("La fecha de plantación es requerida");
+            }
+            java.sql.Date plantedDate;
+            try {
+                plantedDate = java.sql.Date.valueOf(plantedDateParam);
+            } catch (IllegalArgumentException e) {
+                throw new ServletException("Formato de fecha inválido. Use yyyy-MM-dd");
+            }
+
+            // 3) Crear y poblar el objeto Tree
+            Tree treeObj = new Tree();
+            treeObj.setSpecies(species);
+            treeObj.setHeight(height);
+            treeObj.setAge(age);
+            treeObj.setLocation(location);
+            treeObj.setDescription(description);
+            treeObj.setScientificName(scientificName);
+            treeObj.setOrigin(origin);
+            treeObj.setPlantedDate(plantedDate);
+            treeObj.setIdZone(idZone);
+            // 4) Insertar o actualizar según 'id'
+            if (id == null) {
+                tree.save(treeObj);
+            } else {
+                treeObj.setId(id);
+                tree.update(treeObj);
+            }
+
+            // 5) Redirigir de nuevo al listado (GET /Tree)
+            response.sendRedirect(request.getContextPath() + "/Tree");
+
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Formato numérico inválido (altura o edad)");
+        } catch (ServletException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (IOException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error interno del servidor");
         }
-
-        // 5) Redirigir de nuevo al listado (GET /Tree)
-        response.sendRedirect(request.getContextPath() + "/Tree");
     }
 
 }

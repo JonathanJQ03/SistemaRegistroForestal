@@ -259,7 +259,6 @@ footer .icono:hover img {
 
     </head>
     <body>
-                <!-- HEADER -->
   <nav>
         <a href="index.jsp">
            <figure class="logo">

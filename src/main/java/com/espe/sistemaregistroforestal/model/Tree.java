@@ -14,7 +14,7 @@ public class Tree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private Long idZone;
     private String species;         // Atributo en inglés
     private double height;          // Atributo en inglés
     private int age;                // Atributo en inglés
@@ -112,4 +112,6 @@ public class Tree {
     public void setPlantedDate(java.sql.Date plantedDate) {
         this.plantedDate = plantedDate;
     }
+    public Long getIdZone() { return idZone; }
+    public void setIdZone(Long idZone) { this.idZone = idZone; }
 }

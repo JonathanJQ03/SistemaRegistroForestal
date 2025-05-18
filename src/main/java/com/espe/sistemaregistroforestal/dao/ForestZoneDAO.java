@@ -45,7 +45,7 @@ public class ForestZoneDAO {
         stmt.setDouble(3, forestZone.getArea());
         stmt.setString(4, forestZone.getZoneType());
         stmt.setDate(5, forestZone.getRegisterDate());
-
+        stmt.setLong(6, forestZone.getId()); 
         return stmt.executeUpdate() > 0;
     } catch (SQLException e) {
         e.printStackTrace();

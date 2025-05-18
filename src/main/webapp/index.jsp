@@ -6,6 +6,9 @@
   <meta charset="UTF-8" />
   <title>Sistema de Registro Forestal</title>
   <style>
+      *{
+          margin: 0;
+      }
     :root {
       --verde: hsl(111, 52%, 30%);
       --verde-oscuro: hsl(111, 52%, 20%);
@@ -19,7 +22,6 @@
         background-position: center; /* Centra la imagen */
         background-attachment: fixed; /* Fija la imagen para que no se desplace al hacer scroll */
         background-repeat: no-repeat; /* Evita que la imagen se repita */
-        height: 100vh;
         font-family: Georgia, 'Times New Roman', Times, serif;
         color: white;
         display: flex;
@@ -30,7 +32,7 @@
     background-color: rgba(59, 108, 53, 0.7);
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
-    height: 100px;
+    height: 90px;
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -67,7 +69,7 @@
     }
     
     main section.hero {
-    height: calc(100vh - 85px);
+    height: 280px;
     background-image: url("../img/index_0.jpg");
     background-size: 150%;
     background-repeat: no-repeat;
@@ -92,7 +94,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px;
+    margin: 20px auto;
+
 }
 
 .hero h2{
@@ -103,7 +106,7 @@
 
 main section.hero .center {
     background-color: rgba(235, 229, 182, 0.7);
-    padding: 50px;
+    padding: 30px;
     color: white;
     text-shadow: 0 0 10px black;
     font-size: 1.2rem;
@@ -204,7 +207,6 @@ main section.hero figure.logo {
 
     
     footer{
-    padding: 40px 20px;
     text-align: center;
     background-color: rgba(45, 74, 34, 0.6);
     color: #f4f4f4;
@@ -310,7 +312,7 @@ footer .icono:hover img {
     <div class="container">
         <div class="center">
             <figure class="logo">
-                <img src="Images/logo.png" height="100" alt="Logo">
+                <img src="Images/logo.png" height="80" alt="Logo">
             </figure>
             <div class="typewriter">
                 <h1>Sistema de Registro Forestal</h1>

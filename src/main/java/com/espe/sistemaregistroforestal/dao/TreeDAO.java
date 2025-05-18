@@ -26,6 +26,7 @@ public class TreeDAO {
         stmt.setString(6, tree.getScientificName());
         stmt.setString(7, tree.getOrigin());
         stmt.setDate(8, tree.getPlantedDate());
+        stmt.setLong(9, tree.getIdZone());   
         return stmt.executeUpdate() > 0;
     } catch (SQLException e) {
         e.printStackTrace();

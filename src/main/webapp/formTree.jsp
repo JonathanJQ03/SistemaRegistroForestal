@@ -2,498 +2,238 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  
-  <%-- Título dinámico: "Editar Árbol" o "Nuevo Árbol" --%>
-  <title>
-    <c:choose>
-      <c:when test="${not empty tree.id}">Editar Árbol</c:when>
-      <c:otherwise>Nuevo Árbol</c:otherwise>
-    </c:choose>
-  </title>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            <c:choose>
+                <c:when test="${not empty tree.id}">Editar Árbol</c:when>
+                <c:otherwise>Nuevo Árbol</c:otherwise>
+            </c:choose>
+        </title>
 
-  <style>
+        <!-- Bootstrap CSS y JS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+              crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
 
-    .error-message {
-      color: rgb(0, 0, 0);
-      font-size: 0.875em;
-      margin-top: 0.25rem;
-    }
-    
-       :root {
-      --verde: hsl(111, 52%, 30%);
-      --verde-oscuro: hsl(111, 52%, 20%);
-      --verde-oscuro-tr: hsla(111, 53%, 20%, 0.534);
-      --verde-oscuro-tr-2: hsla(111, 53%, 20%, 0.75);
-    }
-    
-    body {
-        background-image: url('Images/lakeBrackgroundFormTree.jpg');
-        background-size: cover;  /* Asegura que la imagen cubra todo el body */
-        background-position: center; /* Centra la imagen */
-        background-attachment: fixed; /* Fija la imagen para que no se desplace al hacer scroll */
-        background-repeat: no-repeat; /* Evita que la imagen se repita */
-        height: 100vh;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        color: white;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    nav {
-    background-color: rgba(59, 108, 53, 0.7);
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    text-align: center;
-    height: 100px;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-}
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+              rel="stylesheet"/>
 
-    nav figure.logo {
-    margin-top: 18px;
-    }
-    
-    nav .links {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    }
-    
-    nav h1 {
-    font-size: 2.5rem;
-}
+        <!-- Script de validaciones -->
+        <script src="JS/validationsTree.js"></script>
 
-    nav a {
-        text-decoration: none;
-        color: #f4e7d1;
-        font-weight: bold;
-        transition: 0.2s all ease-in-out;
-    }
+        <style>
+            :root {
+                --verde: hsl(111, 52%, 30%);
+                --verde-oscuro: hsl(111, 52%, 20%);
+            }
+            body {
+                background: url('Images/lakeBrackgroundFormTree.jpg') center/cover no-repeat fixed;
+                min-height: 100vh;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                color: white;
+                display: flex;
+                flex-direction: column;
+            }
+            nav {
+                background-color: rgba(59,108,53,0.7);
+                height: 100px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                color: #f4e7d1;
+            }
+            nav a {
+                text-decoration: none;
+                color: #f4e7d1;
+                font-weight: bold;
+                transition: 0.2s;
+            }
+            nav a:hover {
+                opacity: 0.7;
+            }
+            .form-container {
+                background-color: rgba(45,74,34,0.85);
+                border-radius: 15px;
+                padding: 2rem;
+                margin: 2rem auto;
+                max-width: 700px;
+                box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            }
+            .error-message {
+                color: #ffcccc;
+                font-size: .875em;
+                margin-top: .25rem;
+            }
+            footer {
+                padding: 40px 20px;
+                background-color: rgba(45,74,34,0.6);
+                color: #f4f4f4;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                margin-top: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- NAVBAR -->
+        <nav>
+            <a href="index.jsp">
+                <img src="Images/logo.png" alt="Logo" height="60">
+            </a>
+            <div>
+                <a href="ForestZone">Zonas Forestales</a>
+                <a href="Tree">Lista de Árboles</a>
+                <a href="ConservationActivity">Actividades</a>
+            </div>
+        </nav>
 
-    nav a:hover {
-        scale: 1.05;
-        opacity: 0.7;
-        text-decoration: none;
-        color: wheat;
-    }
-    
-   footer{
-    padding: 40px 20px;
-    text-align: center;
-    background-color: rgba(45, 74, 34, 0.6);
-    color: #f4f4f4;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
+        <!-- FORMULARIO -->
+        <div class="container">
+            <div class="form-container">
+                <h2 class="text-center mb-4">
+                    <i class="fas fa-tree"></i>
+                    <c:choose>
+                        <c:when test="${not empty tree.id}"> Editar Árbol</c:when>
+                        <c:otherwise> Nuevo Árbol</c:otherwise>
+                    </c:choose>
+                </h2>
 
-.infoFooter {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
+                <form id="treeForm" action="${pageContext.request.contextPath}/Tree" method="post" class="needs-validation" novalidate>
+                    <!-- Para edición -->
+                    <c:if test="${not empty tree.id}">
+                        <input type="hidden" name="id" value="${tree.id}" />
+                    </c:if>
 
-.logoFooter, .infoDerecha {
-    flex: 1;
-    margin: 20px;
-}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="species" name="species"
+                               value="${tree.species}"
+                               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" required>
+                        <label for="species">Especie*</label>
+                        <div class="invalid-feedback">Especie válida (solo letras y espacios).</div>
+                        <div id="speciesError" class="error-message"></div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="idZone" name="idZone" required>
+                            <option value="">-- Selecciona Zona --</option>
+                            <c:forEach var="zone" items="${listZones}">
+                                <option value="${zone.id}"
+                                        ${tree != null && tree.idZone == zone.id ? 'selected' : ''}>
+                                    ${zone.name}
+                                </option>
+                            </c:forEach>
+                        </select>
+                        <label for="idZone">Zona*</label>
+                        <div class="invalid-feedback">Debes seleccionar una zona.</div>
+                        <div id="idZoneError" class="error-message"></div>
+                    </div>
 
-.fotoFooter {
-    width: 150px;
-    margin-bottom: 20px;
-    background-color: #f4e7d1;
-    padding: 10px;
-    border-radius: 10px;
-}
 
-footer p {
-    font-size: 14px;
-    margin: 10px;
-    color: #d1d1d1;
-}
+                    <div class="form-floating mb-3">
+                        <input type="number" step="0.10" class="form-control" id="height" name="height"
+                               value="${tree.height}" min="0.10" max="115.72" required>
+                        <label for="height">Altura (m)*</label>
+                        <div class="invalid-feedback">Altura entre 0.1 y 115.72 metros.</div>
+                        <div id="heightError" class="error-message"></div>
+                    </div>
 
-footer h2 {
-    font-size: 24px;
-    color: #f4e7d1;
-    margin-bottom: 10px;
-}
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="age" name="age"
+                               value="${tree.age}" min="1" max="4850" required>
+                        <label for="age">Edad (años)*</label>
+                        <div class="invalid-feedback">Edad entre 1 y 4,850 años.</div>
+                        <div id="ageError" class="error-message"></div>
+                    </div>
 
-footer a {
-    color: #f4e7d1;
-    text-decoration: none;
-}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="location" name="location"
+                               value="${tree.location}"
+                               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s\.,\-]+$">
+                        <label for="location">Ubicación</label>
+                        <div class="invalid-feedback">Ubicación: letras, números, espacios, puntos, comas y guiones.</div>
+                        <div id="locationError" class="error-message"></div>
+                    </div>
 
-footer .redesSociales {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="description" name="description" rows="3">${tree.description}</textarea>
+                        <label for="description">Descripción</label>
+                        <div class="invalid-feedback">Descripción no válida.</div>
+                        <div id="descriptionError" class="error-message"></div>
+                    </div>
 
-footer .icono {
-    margin: 0 10px;
-}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="scientificName" name="scientificName"
+                               value="${tree.scientificName}"
+                               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s\.]+$">
+                        <label for="scientificName">Nombre Científico</label>
+                        <div class="invalid-feedback">Solo letras, espacios y puntos.</div>
+                        <div id="scientificNameError" class="error-message"></div>
+                    </div>
 
-footer .icono img {
-    width: 25px;
-    height: 25px;
-    border-radius: 10px;
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="origin" name="origin"
+                               value="${tree.origin}"
+                               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$">
+                        <label for="origin">Origen</label>
+                        <div class="invalid-feedback">Solo letras y espacios.</div>
+                        <div id="originError" class="error-message"></div>
+                    </div>
 
-}
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="plantedDate" name="plantedDate"
+                               value="${tree.plantedDate}"
+                               max="<%= java.time.LocalDate.now().toString() %>">
+                        <label for="plantedDate">Fecha de Plantación</label>
+                        <div class="invalid-feedback">La fecha no puede ser futura.</div>
+                        <div id="plantedDateError" class="error-message"></div>
+                    </div>
 
-footer .icono:hover img {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-}
-
-    @media (max-width: 600px) {
-      .cards-container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .card-custom {
-        width: 90%;
-      }
-    }
-  </style>
-    <!-- FontAwesome for icons -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    rel="stylesheet"
-  />
-</head>
-<body>
-      <!-- HEADER -->
-  <nav>
-        <a href="index.jsp">
-           <figure class="logo">
-              <img src="Images/logo.png" alt="Logo" height="60">
-            </figure> 
-        </a>
-
-      <div class="links">
-        <a href="ForestZone">Zonas Forestales</a>
-        <a href="Tree">Lista de Árboles</a>
-        <a href="ConservationActivity">Actividades</a>
-      </div>
-    </nav>
-  <!-- Modal de Error -->
-  <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="errorModalLabel">Error de Validación</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="submit" class="btn btn-success">
+                            <c:choose>
+                                <c:when test="${not empty tree.id}">Actualizar</c:when>
+                                <c:otherwise>Guardar</c:otherwise>
+                            </c:choose>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="window.location.href = 'Tree'">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <p id="modalErrorMessage">Por favor complete todos los campos requeridos correctamente.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="container-center">
-    <!-- Encabezado dinámico -->
-    <h2>
-       <c:choose>
-      <c:when test="${not empty tree.id}">
-        <i class="fas fa-tree"></i> Editar Árbol
-      </c:when>
-      <c:otherwise>
-        <i class="fas fa-tree"></i> Nuevo Árbol
-      </c:otherwise>
-    </c:choose>
-    </h2>
+        <!-- FOOTER -->
+        <footer>
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div class="text-center mb-3">
+                    <img src="Images/logo.png" alt="logo" style="width:150px" class="mb-2 rounded">
+                    <h2>Sistema de Registro Forestal</h2>
+                    <p><i class="fa-solid fa-map-pin"></i> Quito - Ecuador</p>
+                    <p><i class="fa-solid fa-phone"></i> +593 998765412</p>
+                    <p><i class="fa-solid fa-envelope"></i>
+                        <a href="mailto:forestzone@system.com" class="text-light">forestzone@system.com</a>
+                    </p>
+                </div>
+                <div class="text-center mb-3">
+                    <div class="mb-2">
+                        <a href="https://www.facebook.com/?locale=es_LA" class="mx-2"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="https://www.instagram.com/" class="mx-2"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="https://twitter.com/?lang=es" class="mx-2"><i class="fab fa-x-twitter fa-2x"></i></a>
+                    </div>
+                    <p>&copy; Forest Zone — Hecho por el Grupo 3</p>
+                </div>
+            </div>
+        </footer>
+        <script>
+            console.log('validationsTree.js cargado');
+        </script>
+        <script src="${pageContext.request.contextPath}/JS/validationsTree.js"></script>
 
-    <!-- Formulario con Floating Labels -->
-    <form id="treeForm" action="Tree" method="post" class="needs-validation" novalidate>
-      <!-- Hidden para option e id -->
-      <c:if test="${not empty tree.id}">
-        <input type="hidden" name="option" value="update" />
-        <input type="hidden" name="id" value="${tree.id}" />
-      </c:if>
-      <c:if test="${empty tree.id}">
-        <input type="hidden" name="option" value="insert" />
-      </c:if>
-
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="species" name="species" 
-               value="${tree.species}" 
-               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" 
-               required />
-        <label for="species">Especie*</label>
-        <div class="invalid-feedback">
-          Por favor ingresa una especie válida (solo letras y espacios).
-        </div>
-        <div id="speciesError" class="error-message"></div>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input type="number" step="0.01" class="form-control" id="height" name="height" 
-               value="${tree.height}" 
-               min="0.1" max="115" 
-               required />
-        <label for="height">Altura (m)*</label>
-        <div class="invalid-feedback">
-          Ingresa una altura válida (entre 0.1 y 115.72 metros).
-        </div>
-        <div id="heightError" class="error-message"></div>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input type="number" class="form-control" id="age" name="age" 
-               value="${tree.age}" 
-               min="1" max="4850" 
-               required />
-        <label for="age">Edad (años)*</label>
-        <div class="invalid-feedback">
-          Ingresa una edad válida (entre 1 y  4,850 años años).
-        </div>
-        <div id="ageError" class="error-message"></div>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="location" name="location" 
-               value="${tree.location}" 
-               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s\.,-]+$" />
-        <label for="location">Ubicación</label>
-        <div class="invalid-feedback">
-          Ingresa una ubicación válida (letras, números, espacios y caracteres básicos).
-        </div>
-        <div id="locationError" class="error-message"></div>
-      </div>
-
-      <div class="form-floating mb-3">
-        <textarea class="form-control" id="description" name="description" 
-                  rows="3" 
-                  pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s\.,;:!?()-]+$">${tree.description}</textarea>
-        <label for="description">Descripción</label>
-        <div class="invalid-feedback">
-          Ingresa una descripción válida (solo caracteres permitidos).
-        </div>
-        <div id="descriptionError" class="error-message"></div>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="scientificName" name="scientificName" 
-               value="${tree.scientificName}" 
-               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" />
-        <label for="scientificName">Nombre Científico</label>
-        <div class="invalid-feedback">
-          Ingresa un nombre científico válido (solo letras y espacios).
-        </div>
-        <div id="scientificNameError" class="error-message"></div>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="origin" name="origin" 
-               value="${tree.origin}" 
-               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$" />
-        <label for="origin">Origen</label>
-        <div class="invalid-feedback">
-          Ingresa un origen válido (solo letras y espacios).
-        </div>
-        <div id="originError" class="error-message"></div>
-      </div>
-
-      <div class="form-floating mb-3">
-        <input type="date" class="form-control" id="plantedDate" name="plantedDate" 
-               value="${tree.plantedDate}" 
-               max="<%= java.time.LocalDate.now().toString() %>" />
-        <label for="plantedDate">Fecha de Plantación</label>
-        <div class="invalid-feedback">
-          La fecha no puede ser futura.
-        </div>
-        <div id="plantedDateError" class="error-message"></div>
-      </div>
-
-      <!-- Botón Guardar -->
-      <button type="submit" class="btn btn-success">
-        <c:choose>
-          <c:when test="${not empty tree.id}">Actualizar</c:when>
-          <c:otherwise>Guardar</c:otherwise>
-        </c:choose>
-      </button>
-
-      <!-- Botón Cancelar -->
-      <button type="button" class="btn btn-danger ms-2" onclick="window.location.href='Tree'">
-        Cancelar
-      </button>
-    </form>
-  </div>
-
-  <script>
-    // Validación del formulario antes de enviar
-    document.getElementById('treeForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      
-      // Reiniciar mensajes de error
-      clearErrorMessages();
-      
-      // Validar campos
-      let isValid = validateForm();
-      
-      if (isValid) {
-        // Si es válido, enviar el formulario
-        this.submit();
-      } else {
-        // Mostrar modal de error
-        const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-        errorModal.show();
-      }
-    });
-    
-    // Función para limpiar mensajes de error
-    function clearErrorMessages() {
-      const errorElements = document.querySelectorAll('.error-message');
-      errorElements.forEach(element => {
-        element.textContent = '';
-      });
-    }
-    
-    // Función para validar el formulario
-    function validateForm() {
-      let isValid = true;
-      
-      // Validar especie (requerido, solo letras y espacios)
-      const speciesInput = document.getElementById('species');
-      if (!speciesInput.value.trim() || !speciesInput.checkValidity()) {
-        document.getElementById('speciesError').textContent = 
-          'La especie es requerida y solo puede contener letras y espacios.';
-        isValid = false;
-      }
-      
-      // Validar altura (requerido, entre 0.1 y 150)
-      const heightInput = document.getElementById('height');
-      if (!heightInput.value || parseFloat(heightInput.value) < 0.1 || parseFloat(heightInput.value) > 150) {
-        document.getElementById('heightError').textContent = 
-          'La altura es requerida y debe estar entre 0.1 y 150 metros.';
-        isValid = false;
-      }
-      
-      // Validar edad (requerido, entre 1 y 5000)
-      const ageInput = document.getElementById('age');
-      if (!ageInput.value || parseInt(ageInput.value) < 1 || parseInt(ageInput.value) > 5000) {
-        document.getElementById('ageError').textContent = 
-          'La edad es requerida y debe estar entre 1 y 5000 años.';
-        isValid = false;
-      }
-      
-      // Validar ubicación (opcional, pero si tiene contenido debe ser válido)
-      const locationInput = document.getElementById('location');
-      if (locationInput.value.trim() && !locationInput.checkValidity()) {
-        document.getElementById('locationError').textContent = 
-          'La ubicación solo puede contener letras, números, espacios y caracteres básicos.';
-        isValid = false;
-      }
-      
-      // Validar descripción (opcional, pero si tiene contenido debe ser válido)
-      const descriptionInput = document.getElementById('description');
-      if (descriptionInput.value.trim() && !descriptionInput.checkValidity()) {
-        document.getElementById('descriptionError').textContent = 
-          'La descripción contiene caracteres no permitidos.';
-        isValid = false;
-      }
-      
-      // Validar nombre científico (opcional, pero si tiene contenido debe ser válido)
-      const scientificNameInput = document.getElementById('scientificName');
-      if (scientificNameInput.value.trim() && !scientificNameInput.checkValidity()) {
-        document.getElementById('scientificNameError').textContent = 
-          'El nombre científico solo puede contener letras y espacios.';
-        isValid = false;
-      }
-      
-      // Validar origen (opcional, pero si tiene contenido debe ser válido)
-      const originInput = document.getElementById('origin');
-      if (originInput.value.trim() && !originInput.checkValidity()) {
-        document.getElementById('originError').textContent = 
-          'El origen solo puede contener letras y espacios.';
-        isValid = false;
-      }
-      
-      // Validar fecha de plantación (opcional, pero si tiene contenido debe ser válido)
-      const plantedDateInput = document.getElementById('plantedDate');
-      if (plantedDateInput.value) {
-        const today = new Date();
-        const plantedDate = new Date(plantedDateInput.value);
-        if (plantedDate > today) {
-          document.getElementById('plantedDateError').textContent = 
-            'La fecha de plantación no puede ser futura.';
-          isValid = false;
-        }
-      }
-      
-      return isValid;
-    }
-    
-    // Validación en tiempo real para campos de texto
-    document.querySelectorAll('input[type="text"], textarea').forEach(input => {
-      input.addEventListener('input', function() {
-        if (this.value.trim() && !this.checkValidity()) {
-          const errorId = this.id + 'Error';
-          document.getElementById(errorId).textContent = 
-            'Por favor ingresa un valor válido según las reglas de validación.';
-        } else {
-          document.getElementById(this.id + 'Error').textContent = '';
-        }
-      });
-    });
-    
-    // Validación en tiempo real para campos numéricos
-    document.querySelectorAll('input[type="number"]').forEach(input => {
-      input.addEventListener('input', function() {
-        if (this.value && !this.checkValidity()) {
-          const errorId = this.id + 'Error';
-          document.getElementById(errorId).textContent = 
-            'Por favor ingresa un valor válido dentro del rango permitido.';
-        } else {
-          document.getElementById(this.id + 'Error').textContent = '';
-        }
-      });
-    });
-    
-    // Validación en tiempo real para fecha
-    document.getElementById('plantedDate').addEventListener('change', function() {
-      if (this.value) {
-        const today = new Date();
-        const plantedDate = new Date(this.value);
-        if (plantedDate > today) {
-          document.getElementById('plantedDateError').textContent = 
-            'La fecha de plantación no puede ser futura.';
-        } else {
-          document.getElementById('plantedDateError').textContent = '';
-        }
-      }
-    });
-  </script>
-</body>
-  <footer>
-    <section class="infoFooter">
-        <section class="logoFooter">
-            <img src="Images/logo.png" alt="logo" class="fotoFooter">
-            <h2>Sistema de Registro Forestal</h2>
-            <p> <i class="fa-solid fa-map-pin"></i> Quito - Ecuador </p>
-            <p> <i class="fa-solid fa-phone"></i> +593 998765412</p>
-            <p><i class="fa-solid fa-envelope"></i><a href="mailto:forestzone@system.com">forestzone@system.com</a></p>
-        </section>
-        <section class="infoDerecha">
-            <section class="redesSociales">
-                <a href="https://www.facebook.com/?locale=es_LA" class="icono"><img src="Images/facebook.png" alt="Facebook" ></a>
-                <a href="https://www.instagram.com/" class="icono"><img src="Images/Instagram.webp" alt="Ig" ></a>
-                <a href="https://twitter.com/?lang=es" class="icono"><img src="Images/x.jpg" alt="X" ></a>
-            </section>  
-            &copy; Forest Zone
-            <p><i class="fa-solid fa-people-group"></i>Hecho por el Grupo 3</p>              
-        </section>
-    </section>
-</footer>
+    </body>
 </html>

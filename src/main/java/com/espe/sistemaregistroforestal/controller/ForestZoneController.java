@@ -38,6 +38,7 @@ public class ForestZoneController extends HttpServlet {
         switch (option) {
             case "new":
                 request.getRequestDispatcher("/formForestZone.jsp").forward(request, response);
+                break;
             case "delete":
                 Long idDelete = Long.valueOf(request.getParameter("id"));
                 boolean suceso = forestZone.delete(idDelete);
